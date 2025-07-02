@@ -57,7 +57,7 @@ const PlayerProfile: React.FC = () => {
   useEffect(() => {
     const fetchPlayer = async () => {
       try {
-        const res = await fetch(`fetch("https://fan-page-backend.onrender.com/api/players/${id}`);
+        const res = await fetch(`https://fan-page-backend.onrender.com/api/players/${id}`);
         if (!res.ok) throw new Error("Player not found");
         const data = await res.json();
         setPlayer(data);
@@ -70,7 +70,6 @@ const PlayerProfile: React.FC = () => {
     fetchPlayer();
   }, [id]);
 
-  // ✅ UseEffect placed BEFORE any return and uses player safely
   useEffect(() => {
     if (player) {
       const isBowler = player.role.toLowerCase().includes("bowler");
@@ -132,9 +131,7 @@ const PlayerProfile: React.FC = () => {
                       <button
                         onClick={() => setViewStat("batting")}
                         className={`px-3 py-1 rounded text-sm ${
-                          viewStat === "batting"
-                            ? "bg-yellow-500 text-white"
-                            : "bg-gray-200"
+                          viewStat === "batting" ? "bg-yellow-500 text-white" : "bg-gray-200"
                         }`}
                       >
                         Batting
@@ -142,9 +139,7 @@ const PlayerProfile: React.FC = () => {
                       <button
                         onClick={() => setViewStat("bowling")}
                         className={`px-3 py-1 rounded text-sm ${
-                          viewStat === "bowling"
-                            ? "bg-blue-500 text-white"
-                            : "bg-gray-200"
+                          viewStat === "bowling" ? "bg-blue-500 text-white" : "bg-gray-200"
                         }`}
                       >
                         Bowling
@@ -159,11 +154,9 @@ const PlayerProfile: React.FC = () => {
                     <table className="w-full text-sm border">
                       <thead className="bg-yellow-300 text-left text-sm">
                         <tr>
-                          {["Format", "Mat", "Inns", "Runs", "Avg", "SR", "HS", "100s", "50s", "4s", "6s"].map(
-                            (col) => (
-                              <th key={col} className="px-2 py-1">{col}</th>
-                            )
-                          )}
+                          {["Format", "Mat", "Inns", "Runs", "Avg", "SR", "HS", "100s", "50s", "4s", "6s"].map((col) => (
+                            <th key={col} className="px-2 py-1">{col}</th>
+                          ))}
                         </tr>
                       </thead>
                       <tbody>
@@ -225,7 +218,7 @@ const PlayerProfile: React.FC = () => {
             )}
 
             {/* Teams Played */}
-            {player.teamsPlayed?.length && (
+            {player.teamsPlayed?.length ? (
               <div>
                 <h3 className="text-lg font-semibold text-gray-700">Teams Played</h3>
                 <ul className="list-disc pl-6 text-gray-600">
@@ -234,7 +227,7 @@ const PlayerProfile: React.FC = () => {
                   ))}
                 </ul>
               </div>
-            )}
+            ) : null}
 
             {/* About */}
             <div>
