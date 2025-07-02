@@ -54,21 +54,21 @@ const PlayerProfile: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [viewStat, setViewStat] = useState<"batting" | "bowling">("batting");
 
-  useEffect(() => {
-    const fetchPlayer = async () => {
-      try {
-        const res = await fetch(`https://fan-page-backend.onrender.com/api/players/${id}`);
-        if (!res.ok) throw new Error("Player not found");
-        const data = await res.json();
-        setPlayer(data);
-      } catch (err) {
-        console.error("Failed to load player:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchPlayer();
-  }, [id]);
+ useEffect(() => {
+  const fetchPlayer = async () => {
+    try {
+      const res = await fetch(`https://fan-page-backend.onrender.com/api/players/${id}`);
+      if (!res.ok) throw new Error("Player not found");
+      const data = await res.json();
+      setPlayer(data);
+    } catch (err) {
+      console.error("Failed to load player:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+  fetchPlayer();
+}, [id]);
 
   useEffect(() => {
     if (player) {
