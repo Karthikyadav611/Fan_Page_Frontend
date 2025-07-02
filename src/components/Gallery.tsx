@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Play } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 const Gallery = () => {
-  const [currentImage, setCurrentImage] = useState(0);
-   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+   const [currentImage, setCurrentImage] = useState(0);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
 
   const moments = [
@@ -13,47 +13,46 @@ const Gallery = () => {
       title: "MS Dhoni's Helicopter Shot",
       description: "The iconic finish that defined cricket",
       type: "video",
-      videoUrl: "https://www.youtube.com/embed/mFsyGkx2wzA",
+      videoUrl: "https://www.youtube.com/embed/mFsyGkx2wzA?enablejsapi=1",
       thumbnailUrl: "/thumbnails/dhoni.png"
     },
     {
       title: "IPL 2023 Victory Celebration",
       description: "The moment we became champions again",
       type: "video",
-      videoUrl: "https://youtube.com/embed/EOOd-wKE_uE?si=iRTdQV6UL1LFwMJ1",
+      videoUrl: "https://www.youtube.com/embed/EOOd-wKE_uE?enablejsapi=1",
       thumbnailUrl: "/thumbnails/2023ipl.jpg"
     },
     {
       title: "Whistle Podu at Chepauk",
       description: "The Yellow Army in full voice",
       type: "video",
-      videoUrl: "https://youtube.com/embed/IqNJWA2QMpY?si=j-tuJtvWGlclDvIk",
+      videoUrl: "https://www.youtube.com/embed/IqNJWA2QMpY?enablejsapi=1",
       thumbnailUrl: "/thumbnails/cheers.jpg"
     },
     {
       title: "Raina's fastest runs (87 of 25 balls)",
       description: "Mr. IPL at his absolute best",
       type: "video",
-      videoUrl: "https://youtube.com/embed/Dx8XDOHR87s?si=8Qy8ZjK2MXq-59lL",
+      videoUrl: "https://www.youtube.com/embed/Dx8XDOHR87s?enablejsapi=1",
       thumbnailUrl: "/thumbnails/raina87.jpg"
     },
     {
       title: "Jadeja's All-round Performance",
       description: "The ultimate team player delivers",
       type: "video",
-      videoUrl: "https://youtube.com/embed/614-vhE4S4w?si=q1VMiFDedJZpXjEz",
+      videoUrl: "https://www.youtube.com/embed/614-vhE4S4w?enablejsapi=1",
       thumbnailUrl: "/thumbnails/jadeja37.jpg"
     },
     {
       title: "Trophy Presentation 2021",
       description: "Champions once again",
       type: "video",
-      videoUrl: "https://youtube.com/embed/_SMkDYW60mM?si=gu_fMEa8OU0B_BcN",
+      videoUrl: "https://www.youtube.com/embed/_SMkDYW60mM?enablejsapi=1",
       thumbnailUrl: "/thumbnails/2021ipl.jpg"
     }
   ];
-
-  const nextImage = () => setCurrentImage((prev) => (prev + 1) % moments.length);
+ const nextImage = () => setCurrentImage((prev) => (prev + 1) % moments.length);
   const prevImage = () => setCurrentImage((prev) => (prev - 1 + moments.length) % moments.length);
 
   useEffect(() => {
@@ -82,7 +81,6 @@ const Gallery = () => {
   }, []);
 
   const currentMoment = moments[currentImage];
-
   return (
     <section
       id="gallery"
@@ -99,7 +97,6 @@ const Gallery = () => {
           </p>
         </div>
 
-        {/* Featured Video Carousel */}
         <div className="mb-16">
           <Card className="bg-gray-800 border-gray-700 overflow-hidden">
             <CardContent className="p-0">
@@ -188,14 +185,12 @@ const Gallery = () => {
                   />
                   <Play className="absolute bottom-2 right-2 w-5 h-5 text-white bg-black/60 rounded-full p-1" />
                 </div>
-                <p className="text-sm text-white font-medium truncate">
-                  {moment.title}
-                </p>
+                <p className="text-sm text-white font-medium truncate">{moment.title}</p>
               </CardContent>
             </Card>
           ))}
         </div>
-        <div>
+      </div>
           <h3 className="text-3xl font-bold text-center mb-12">Fan Moments</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <Card className="bg-gray-800 border-gray-700">
