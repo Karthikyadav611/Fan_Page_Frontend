@@ -82,7 +82,6 @@ const Gallery = () => {
   }, []);
 
   const currentMoment = moments[currentImage];
-  return (
 
   return (
     <section
