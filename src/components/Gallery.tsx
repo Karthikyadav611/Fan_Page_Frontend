@@ -265,7 +265,6 @@ const Gallery = () => {
 </Card>
 
           </div>
-      </div>
 
     </section>
   );
