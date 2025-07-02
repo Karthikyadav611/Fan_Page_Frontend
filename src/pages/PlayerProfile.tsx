@@ -57,7 +57,7 @@ const PlayerProfile: React.FC = () => {
   useEffect(() => {
     const fetchPlayer = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/players/${id}`);
+        const res = await fetch(`fetch("https://fan-page-backend.onrender.com/api/players/${id}`);
         if (!res.ok) throw new Error("Player not found");
         const data = await res.json();
         setPlayer(data);
