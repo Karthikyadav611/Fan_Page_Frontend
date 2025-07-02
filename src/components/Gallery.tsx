@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 
 const Gallery = () => {
   const [currentImage, setCurrentImage] = useState(0);
+   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const iframeRef = useRef<HTMLIFrameElement | null>(null);
 
   const moments = [
     {
@@ -51,24 +53,36 @@ const Gallery = () => {
     }
   ];
 
-  const nextImage = () => {
-    setCurrentImage((prev) => (prev + 1) % moments.length);
-  };
-
-  const prevImage = () => {
-    setCurrentImage((prev) => (prev - 1 + moments.length) % moments.length);
-  };
+  const nextImage = () => setCurrentImage((prev) => (prev + 1) % moments.length);
+  const prevImage = () => setCurrentImage((prev) => (prev - 1 + moments.length) % moments.length);
 
   useEffect(() => {
-  const interval = setInterval(() => {
-    setCurrentImage((prev) => (prev + 1) % moments.length);
-  }, 5000);
+    if (isVideoPlaying) return;
 
-  return () => clearInterval(interval);
-}, [moments.length]);
+    const interval = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % moments.length);
+    }, 5000);
 
+    return () => clearInterval(interval);
+  }, [isVideoPlaying,moments.length]);
+
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      if (
+        typeof event.data === "string" &&
+        event.data.includes("infoDelivery") &&
+        event.data.includes('"playerState":1') // 1 means PLAYING
+      ) {
+        setIsVideoPlaying(true);
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, []);
 
   const currentMoment = moments[currentImage];
+  return (
 
   return (
     <section
@@ -99,6 +113,13 @@ const Gallery = () => {
                       title={currentMoment.title}
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
+                      onLoad={() => {
+                        const iframe = document.querySelector('iframe');
+                        iframe?.contentWindow?.postMessage(
+                          JSON.stringify({ event: 'listening' }),
+                          '*'
+                        );
+                      }}
                     />
                   ) : (
                     <div className="text-center px-6">
